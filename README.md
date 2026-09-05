@@ -9,21 +9,34 @@ A RESTful API built with Node.js, Express, TypeScript, and PostgreSQL for managi
 *   **Database:** PostgreSQL
 *   **ORM:** Sequelize
 *   **Validation:** Zod
+*   **Containerization:** Docker & Docker Compose
 
 ## Setup Instructions
 
 ### Prerequisites
-1.  [Node.js](https://nodejs.org/) installed on your machine.
-2.  [PostgreSQL](https://www.postgresql.org/) installed and running locally.
+1. [Node.js](https://nodejs.org/) installed on your machine.
+2. [PostgreSQL](https://www.postgresql.org/) installed and running locally.
+3. [Docker & Docker Desktop](https://www.docker.com/)
 
-### Installation
+### Option A: Running with Docker
+Run the entire application and database in an isolated environment using Docker.
+1. Clone the repository and navigate to the root folder.
+2. Make sure Docker Desktop is running on your machine.
+3. Run the following command in your terminal:
+```bash
+docker-compose up --build
+```
+The server will automatically start at `http://localhost:3000` with the database fully synced.
+
+### Option B : Running Locally (Without Docker)
+#### Installation
 1.  Clone the repository and navigate to the root folder.
 2.  Install the dependencies:
     ```bash
     npm install
     ```
 
-### Environment Configuration
+#### Environment Configuration
 1.  Create a `.env` file in the root directory and update the credentials according to your local PostgreSQL setup.
     ```env
     PORT=3000
@@ -34,7 +47,7 @@ A RESTful API built with Node.js, Express, TypeScript, and PostgreSQL for managi
     DB_NAME=blog_db
     ```
 
-### Database Setup
+#### Database Setup
 1.  Open your PostgreSQL terminal (`psql`) or a GUI client like pgAdmin.
 2.  Create a blank database matching your `.env` configuration:
     ```sql
@@ -42,7 +55,7 @@ A RESTful API built with Node.js, Express, TypeScript, and PostgreSQL for managi
     ```
 3.  *Note:* You do not need to run manual migration scripts. The application uses Sequelize's `sync({ alter: true })` feature in the development environment to automatically generate the `posts` table upon starting the server.
 
-### Running the Application
+#### Running the Application
 Start the development server using npm:
 ```bash
 npm run dev
