@@ -1,16 +1,19 @@
 import { Router } from 'express';
 import * as postController from '../controllers/post.controller';
-import { validateRequest, postSchema } from '../middlewares/validate';
+import { validateRequest, postSchema, idParamSchema, paginationQuerySchema } from '../middlewares/validate';
 
 const router = Router();
 
 router.route('/')
-  .get(postController.getPosts)
-  .post(validateRequest(postSchema), postController.createPost);
+  .get(validateRequest(paginationQuerySchema, 'query'),postController.getPosts)
+  .post(validateRequest(postSchema, 'body'), postController.createPost);
 
 router.route('/:id')
-  .get(postController.getPostById)
-  .put(validateRequest(postSchema), postController.updatePost)
-  .delete(postController.deletePost);
+  .get(validateRequest(idParamSchema, 'params'), postController.getPostById)
+  .put(
+    validateRequest(idParamSchema, 'params'),
+    validateRequest(postSchema, 'body'),
+    postController.updatePost)
+  .delete(validateRequest(idParamSchema, 'params'), postController.deletePost);
 
 export default router;
